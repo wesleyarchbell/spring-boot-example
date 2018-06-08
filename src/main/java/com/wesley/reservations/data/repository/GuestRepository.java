@@ -1,4 +1,4 @@
-package com.wesley.reservations.data.webservice;
+package com.wesley.reservations.data.repository;
 
 import com.wesley.reservations.data.entity.Guest;
 import org.springframework.data.repository.PagingAndSortingRepository;

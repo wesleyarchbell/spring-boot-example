@@ -1,4 +1,4 @@
-package com.wesley.reservations.data.webservice;
+package com.wesley.reservations.data.repository;
 
 import java.sql.Date;
 import java.util.List;

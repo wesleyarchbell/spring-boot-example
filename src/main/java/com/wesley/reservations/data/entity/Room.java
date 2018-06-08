@@ -10,7 +10,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ROOM")
 public final class Room {
-
     @Id
     @Column(name = "ROOM_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
