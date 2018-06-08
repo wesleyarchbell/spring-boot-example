@@ -3,6 +3,7 @@ package com.wesley.reservations.service.dto;
 import java.util.Date;
 
 public final class RoomReservation {
+
     private long roomId;
     private long guestId;
     private String roomName;
@@ -10,6 +11,19 @@ public final class RoomReservation {
     private String firstName;
     private String lastName;
     private Date date;
+
+    public RoomReservation() {
+    }
+
+    public RoomReservation(long roomId, long guestId, String roomName, String roomNumber, String firstName, String lastName, Date date) {
+        this.roomId = roomId;
+        this.guestId = guestId;
+        this.roomName = roomName;
+        this.roomNumber = roomNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.date = date;
+    }
 
     public long getRoomId() {
         return roomId;

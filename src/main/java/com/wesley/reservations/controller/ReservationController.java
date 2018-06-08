@@ -9,37 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.List;
 
 @Controller()
 @RequestMapping("/reservations")
-public final class ReservationController {
+public class ReservationController {
+
+    private ReservationService reservationService;
 
     @Autowired
-    private ReservationService reservationService;
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String getReservations(@RequestParam(name = "date", required = false) String dateString, Model model) {
-        LocalDate date = LocalDate.now();
-        if (dateString != null) {
-           try {
-               date = LocalDate.parse(dateString);
-           } catch (DateTimeParseException e) {
-               date = LocalDate.now();
-           }
-        }
-        List<RoomReservation> roomReservations = getRoomReservations(date);
+        List<RoomReservation> roomReservations = this.reservationService.getRoomReservationsForDate(dateString);
         model.addAttribute("roomReservations", roomReservations);
         return "reservations";
-    }
-
-    private List<RoomReservation> getRoomReservations(LocalDate date) {
-        Date startDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        return this.reservationService.getRoomReservationsForDate(startDate);
     }
 
 }

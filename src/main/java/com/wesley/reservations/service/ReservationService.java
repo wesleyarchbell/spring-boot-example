@@ -7,14 +7,17 @@ import com.wesley.reservations.data.repository.RoomRepository;
 import com.wesley.reservations.data.repository.GuestRepository;
 import com.wesley.reservations.data.repository.ReservationRepository;
 import com.wesley.reservations.service.dto.RoomReservation;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
-
 @Service
-public final class ReservationService {
+public class ReservationService {
 
     private RoomRepository roomRepository;
     private GuestRepository guestRepository;
@@ -27,7 +30,8 @@ public final class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public List<RoomReservation> getRoomReservationsForDate(Date date) {
+    public List<RoomReservation> getRoomReservationsForDate(String reservationDate) {
+        Date date = from(reservationDate);
         Iterable<Room> rooms = this.roomRepository.findAll();
         Map<Long, RoomReservation> roomReservations = new HashMap<>();
         rooms.forEach(room -> {
@@ -51,5 +55,17 @@ public final class ReservationService {
             }
         });
         return new ArrayList<>(roomReservations.values());
+    }
+
+    private Date from(String date) {
+        LocalDate startDate = LocalDate.now();
+        if (date != null) {
+            try {
+                startDate = LocalDate.parse(date);
+            } catch (DateTimeParseException e) {
+                startDate = LocalDate.now();
+            }
+        }
+        return Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }

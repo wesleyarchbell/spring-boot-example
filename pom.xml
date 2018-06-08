@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.wesley</groupId>
-	<artifactId>reservations</artifactId>
+	<artifactId>spring-boot-reservations</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
